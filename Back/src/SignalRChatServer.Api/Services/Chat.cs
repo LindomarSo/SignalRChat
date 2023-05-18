@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using SignalRChatServer.Api.Models.Enums;
 
 namespace SignalRChatServer.Api.Services;
 
@@ -14,14 +15,14 @@ public class Chat : Hub
 
     public async Task NewMessage(string userName, string message)
     {
-        await Clients.All.SendAsync("NewMessage", userName, message);
+        await Clients.All.SendAsync(nameof(NewMessage), userName, message);
         _messages?.Add(new Message(userName, message));
     }
 
     public async Task NewUser(string userName, string connectionId)
     {
-        await Clients.Client(connectionId).SendAsync("previousMessages", _messages);
-        await Clients.All.SendAsync("NewUser", userName);
+        await Clients.Client(connectionId).SendAsync(HubMethod.PreviousMessages.ToString(), _messages);
+        await Clients.All.SendAsync(nameof(NewUser), userName);
     }
 }
 
