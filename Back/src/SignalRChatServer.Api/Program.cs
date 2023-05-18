@@ -1,4 +1,6 @@
 using SignalRChatServer.Api.HubService;
+using SignalRChatServer.Api.Models;
+using SignalRChatServer.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +10,11 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
 
-builder.Services.AddCors(); 
+builder.Services.Configure<HubConnectionModel>(builder.Configuration.GetSection("HubConnection"));
+
+builder.Services.AddScoped<IHubConnectionService, HubConnectionService>();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SignalRChatServer.Api.Services;
 
 namespace SignalRChatServer.Api.Controllers;
 
@@ -12,15 +13,21 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
+    private readonly IHubConnectionService _hubConnection;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IHubConnectionService hubConnection)
     {
         _logger = logger;
+        _hubConnection = hubConnection;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    public async Task<IEnumerable<WeatherForecast>> Get()
     {
+        var user = "API Weather Forecast";
+
+        await _hubConnection.SendAsync(user, $"{DateOnly.FromDateTime(DateTime.Now)}, {Random.Shared.Next(25)}");
+
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -29,4 +36,6 @@ public class WeatherForecastController : ControllerBase
         })
         .ToArray();
     }
+
+    public record Message(string Text, string UserName);
 }

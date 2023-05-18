@@ -8,20 +8,20 @@ public class Chat : Hub
 
     public Chat()
     {
-        if(_messages is null)
-            _messages = new List<Message>();    
+        if (_messages is null)
+            _messages = new List<Message>();
     }
 
-    public void NewMessage(string userName, string message)
+    public async Task NewMessage(string userName, string message)
     {
-        Clients.All.SendAsync("NewMessage", userName, message).Wait();
+        await Clients.All.SendAsync("NewMessage", userName, message);
         _messages?.Add(new Message(userName, message));
     }
 
-    public void NewUser(string userName, string connectionId)
+    public async Task NewUser(string userName, string connectionId)
     {
-        Clients.Client(connectionId).SendAsync("previousMessages", _messages).Wait();
-        Clients.All.SendAsync("NewUser", userName).Wait();
+        await Clients.Client(connectionId).SendAsync("previousMessages", _messages);
+        await Clients.All.SendAsync("NewUser", userName);
     }
 }
 

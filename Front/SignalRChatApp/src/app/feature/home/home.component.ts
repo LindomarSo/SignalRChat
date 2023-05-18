@@ -12,7 +12,7 @@ import { NameDialogComponent } from 'src/app/shared/name-dialog/name-dialog.comp
 })
 export class HomeComponent implements OnInit {
 
-  connection = new HubConnectionBuilder().withUrl("https://localhost:44362/chat").build();
+  connection = new HubConnectionBuilder().withUrl("http://localhost:5153/chat").build();
 
   messages: Message[] = [];
 
