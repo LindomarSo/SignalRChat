@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SignalRChatServer.Api.Models.Enums;
 using SignalRChatServer.Api.Services;
 
 namespace SignalRChatServer.Api.Controllers;
@@ -26,7 +27,7 @@ public class WeatherForecastController : ControllerBase
     {
         var user = "API Weather Forecast";
 
-        await _hubConnection.SendAsync(user, $"{DateOnly.FromDateTime(DateTime.Now)}, {Random.Shared.Next(25)}");
+        await _hubConnection.SendAsync(HubMethod.NewMessage, user, $"{DateOnly.FromDateTime(DateTime.Now)}, {Random.Shared.Next(25)}");
 
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {

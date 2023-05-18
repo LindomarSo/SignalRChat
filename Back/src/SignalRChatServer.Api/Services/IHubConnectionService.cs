@@ -1,6 +1,8 @@
+using SignalRChatServer.Api.Models.Enums;
+
 namespace SignalRChatServer.Api.Services;
 
 public interface IHubConnectionService
 {
-    Task SendAsync(string user, string message);
+    Task SendAsync(HubMethod method, string user, string message);
 }

@@ -1,4 +1,3 @@
-using SignalRChatServer.Api.HubService;
 using SignalRChatServer.Api.Models;
 using SignalRChatServer.Api.Services;
 
