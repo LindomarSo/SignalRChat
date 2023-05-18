@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Bem vindo!</h1>
+<div mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <!-- <mat-label>Nome</mat-label> -->
+        <input [(ngModel)]="name" matInput placeholder="Digite o seu nome">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="name">Ok</button>
+</div>

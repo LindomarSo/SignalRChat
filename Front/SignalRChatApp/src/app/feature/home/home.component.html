@@ -1,0 +1,50 @@
+<div class="container">
+    <mat-toolbar color="primary">
+        <div class="nav">
+            <p>SignalR Chat</p>
+            <button mat-fab color="warn" matBadge="8" matBadgePosition="before" matBadgeColor="accent">
+                <mat-icon class="material-icons-outlined">
+                    notifications
+                </mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
+    <div class="messages">
+        <ng-template ngFor let-message [ngForOf]="messages" let-i="index">
+            <div *ngIf="message.userName === userName" class="message-line me">
+                <div class="message me">
+                    <div class="user-name me">
+                        {{message.userName}}
+                    </div>
+                    <div>
+                        {{message.text}}
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="message.userName !== userName" class="message-line other">
+                <div class="message other">
+                    <div class="user-name other">
+                        {{message.userName}}
+                    </div>
+                    <div>
+                        {{message.text}}
+                    </div>
+                </div>
+            </div>
+
+        </ng-template>
+    </div>
+    <footer>
+        <form class="form">
+            <mat-form-field class="form-group" appearance="fill">
+                <mat-label>Escreva a sua mensagem</mat-label>
+                <input matInput placeholder="Olá" [formControl]="messageControl">
+                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+            </mat-form-field>
+            <button mat-mini-fab color="primary" (click)="sendMessage()" aria-label="Enviar">
+                <mat-icon matSuffix>send</mat-icon>
+            </button>
+        </form>
+    </footer>
+</div>
